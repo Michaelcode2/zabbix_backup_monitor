@@ -21,7 +21,6 @@ def scandirs(folder, filestrings):
             if f.name == 'Archives':
                 continue
             if f.name[0] != '.':
-                print(f.name)
                 list_of_files = glob.glob(f.path + '/*.zip')  # * means all if need specific format then *.csv
                 if list_of_files:
                     latest_file = max(list_of_files, key = os.path.getctime)  # get latest file created in folder
@@ -46,9 +45,9 @@ def scandirs(folder, filestrings):
                                 count = 2
                     else:
                         count = 2
-                    # time - реальное время файла
-                    # days - количество дней с даты файла
-                    # count - количество запрограммированных дней (периодичность). Получаем из файла count.txt
+                        # time - реальное время файла
+                        # days - количество дней с даты файла
+                        # count - количество запрограммированных дней (периодичность). Получаем из файла count.txt
                     foldername = f.path.split('/')
                     if len(foldername) > 6:
                         foldername = foldername[-2] + '/' + foldername[-1]
@@ -61,13 +60,12 @@ def scandirs(folder, filestrings):
 
     return filestrings
 
-#backup_folder = '/mnt/DBOWN/Intellect/files/BACKUPS'
+backup_folder = '/mnt/DBOWN/Intellect/files/BACKUPS'
 folder = os.path.dirname(os.path.realpath(__file__))
 BackupDataFile = folder + '/BackupData.txt'
-print(folder)
 #print(os.path.realpath(__file__))
 
-filestrings = start_scandirs(folder)
+filestrings = start_scandirs(backup_folder)
 #print(filestrings)
 
 with open(BackupDataFile, 'w+') as file:

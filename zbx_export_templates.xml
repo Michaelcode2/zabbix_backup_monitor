@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.4</version>
+    <date>2022-04-20T10:37:24Z</date>
+    <groups>
+        <group>
+            <uuid>23b4cb78db6e4cd194f3600a0006af6c</uuid>
+            <name>MyTemplates</name>
+        </group>
+        <group>
+            <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <uuid>b7c4f5b01c6d49cab7e150aefd1c4921</uuid>
+            <template>Backup info</template>
+            <name>Backup info</name>
+            <groups>
+                <group>
+                    <name>MyTemplates</name>
+                </group>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <discovery_rules>
+                <discovery_rule>
+                    <uuid>21402ff704aa4adfb2ffce69227a215e</uuid>
+                    <name>Backup Dirs Discovery</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>backup.discovery</key>
+                    <delay>3h</delay>
+                    <lifetime>90d</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>a993e4f83e0f4a4bb00879ae4d9d93f8</uuid>
+                            <name>Backup size $1</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>backup.size[{#BACKUP}]</key>
+                            <delay>6h</delay>
+                            <history>45d</history>
+                            <trends>60d</trends>
+                            <units>B</units>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Backup</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>a1546ccaa7c2499db2dd20f31e8677e0</uuid>
+                                    <expression>last(/Backup info/backup.size[{#BACKUP}])=0</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Backup info/backup.size[{#BACKUP}])&gt;0</recovery_expression>
+                                    <name>Бэкап {#BACKUP} нулевого размера</name>
+                                    <priority>WARNING</priority>
+                                    <description>Последний бэкап создался с ошибкой, так как имеет нулевой размер.</description>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>98dad5a10fcf4f64908f6b78ed8f8646</uuid>
+                            <name>Backup time $1</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>backup.time[{#BACKUP}]</key>
+                            <delay>6h</delay>
+                            <history>10d</history>
+                            <trends>60d</trends>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Backup</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>c5f106d038734e3ebdcdd9d27b1bdfea</uuid>
+                                    <expression>last(/Backup info/backup.time[{#BACKUP}])&gt;1</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Backup info/backup.time[{#BACKUP}])&lt;1</recovery_expression>
+                                    <name>Бэкап {#BACKUP} просрочен</name>
+                                    <priority>AVERAGE</priority>
+                                    <description>Дата создания последнего бэкапа больше суток.</description>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+    </templates>
+</zabbix_export>

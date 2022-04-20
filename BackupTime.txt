@@ -1,8 +1,0 @@
-dedic-nodes-BCH-01 21
-dedic-nodes-BTC-01 63
-dedic-nodes-DASH-01 35
-dedic-nodes-LTC-01 55
-vps-14 14
-vps-15 13
-vps-16 10
-vps-17 66
